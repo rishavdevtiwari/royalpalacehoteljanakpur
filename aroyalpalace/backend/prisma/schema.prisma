@@ -1,0 +1,168 @@
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  address   String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  bookings  Booking[]
+
+  @@map("users")
+}
+
+model RoomType {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  rateSingle   Decimal  @map("rate_single")
+  rateDouble   Decimal? @map("rate_double")
+  maxAdults    Int      @default(2) @map("max_adults")
+  maxChildren  Int      @default(1) @map("max_children")
+  amenities    String[]
+  imageUrl     String?  @map("image_url")
+  totalRooms   Int      @default(0) @map("total_rooms")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
+  rooms        Room[]
+  roomAmenities RoomAmenity[]
+
+  @@map("room_types")
+}
+
+model Room {
+  id          String   @id @default(uuid())
+  roomNumber  String   @unique @map("room_number")
+  roomTypeId  String   @map("room_type_id")
+  status      RoomStatus @default(AVAILABLE)
+  floor       Int
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+  roomType    RoomType @relation(fields: [roomTypeId], references: [id])
+  bookings    Booking[]
+
+  @@map("rooms")
+}
+
+model Booking {
+  id               String   @id @default(uuid())
+  userId           String   @map("user_id")
+  roomId           String   @map("room_id")
+  bookingReference String   @unique @map("booking_reference")
+  checkInDate      DateTime @map("check_in_date")
+  checkOutDate     DateTime @map("check_out_date")
+  adults           Int      @default(1)
+  children         Int      @default(0)
+  status           BookingStatus @default(CONFIRMED)
+  occupancyType    OccupancyType @default(SINGLE) @map("occupancy_type")
+  extraBed         Boolean  @default(false) @map("extra_bed")
+  totalAmount      Decimal  @map("total_amount")
+  specialRequests  String?  @map("special_requests")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at")
+  user             User     @relation(fields: [userId], references: [id])
+  room             Room     @relation(fields: [roomId], references: [id])
+  payments         Payment[]
+
+  @@map("bookings")
+}
+
+model Payment {
+  id             String   @id @default(uuid())
+  bookingId      String   @map("booking_id")
+  amount         Decimal
+  paymentMethod  PaymentMethod @map("payment_method")
+  paymentStatus  PaymentStatus @default(PENDING) @map("payment_status")
+  transactionId  String?  @map("transaction_id")
+  paymentDate    DateTime @default(now()) @map("payment_date")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+  booking        Booking  @relation(fields: [bookingId], references: [id])
+
+  @@map("payments")
+}
+
+model Amenity {
+  id             String   @id @default(uuid())
+  name           String   @unique
+  description    String?
+  icon           String?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+  roomAmenities  RoomAmenity[]
+
+  @@map("amenities")
+}
+
+model RoomAmenity {
+  roomTypeId String @map("room_type_id")
+  amenityId  String @map("amenity_id")
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id])
+  amenity    Amenity @relation(fields: [amenityId], references: [id])
+
+  @@id([roomTypeId, amenityId])
+  @@map("room_amenities")
+}
+
+model ContactMessage {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  phone       String?
+  subject     String
+  message     String
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("contact_messages")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum RoomStatus {
+  AVAILABLE
+  OCCUPIED
+  MAINTENANCE
+}
+
+enum BookingStatus {
+  CONFIRMED
+  PENDING
+  CANCELLED
+  COMPLETED
+}
+
+enum OccupancyType {
+  SINGLE
+  DOUBLE
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  BANK_TRANSFER
+  CASH
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}

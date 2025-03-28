@@ -1,0 +1,51 @@
+
+services:
+  - type: web
+    name: royal-palace-hotel-api
+    env: node
+    plan: starter
+    buildCommand: npm install && npx prisma generate && npx prisma db push --accept-data-loss
+    startCommand: npm start
+    healthCheckPath: /health
+    rootDir: aroyalpalace/backend
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: royal-palace-hotel-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://rishavdevtiwari.com.np
+      - key: HOTEL_EMAIL
+        value: rishavdevtiwari01@gmail.com
+      - key: EMAIL_PASSWORD
+        sync: false
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: /*
+    domains:
+      - api.rishavdevtiwari.com.np
+        
+  - type: web
+    name: royal-palace-hotel-frontend
+    env: static
+    buildCommand: cd aroyalpalace/frontend && npm install && npm run build
+    staticPublishPath: aroyalpalace/frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - rishavdevtiwari.com.np
+    envVars:
+      - key: VITE_API_URL
+        value: https://api.rishavdevtiwari.com.np/api
+        
+databases:
+  - name: royal-palace-hotel-db
+    plan: starter
+    databaseName: hotel_management
