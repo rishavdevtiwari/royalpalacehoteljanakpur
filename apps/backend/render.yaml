@@ -18,7 +18,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        value: https://rishavdevtiwari.github.io/royalpalacehotel
+        value: https://rishavdevtiwari.com.np
       - key: HOTEL_EMAIL
         value: rishavdevtiwari01@gmail.com
       - key: EMAIL_PASSWORD

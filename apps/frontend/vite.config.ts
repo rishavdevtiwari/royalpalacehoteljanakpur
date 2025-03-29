@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 
 export default defineConfig({
-  base: '/royalpalacehotel/', // Base path for GitHub Pages
+  base: '/', // Base path for custom domain deployment
   plugins: [react()],
   resolve: {
     alias: {
