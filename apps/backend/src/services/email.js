@@ -1,6 +1,6 @@
 
 const nodemailer = require('nodemailer');
-const HOTEL_EMAIL = process.env.HOTEL_EMAIL || 'royalpalacejanakpur@gmail.com';
+const HOTEL_EMAIL = process.env.HOTEL_EMAIL || 'rishavdevtiwari01@gmail.com';
 
 // Initialize email transporter
 let transporter;
