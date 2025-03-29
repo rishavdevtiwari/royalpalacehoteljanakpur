@@ -1,20 +1,15 @@
 {
-  "name": "royalpalacehotel",
-  "version": "1.0.0",
-  "description": "A Royal Palace Hotel Management System",
+  "name": "royalpalacehotel-monorepo",
   "private": true,
+  "workspaces": [
+    "apps/frontend",
+    "apps/backend"
+  ],
   "scripts": {
-    "install:all": "npm run install:backend && npm run install:frontend",
-    "install:backend": "cd apps/backend && npm install",
-    "install:frontend": "cd apps/frontend && npm install",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "cd apps/backend && npm run dev",
-    "dev:frontend": "cd apps/frontend && npm run dev",
-    "build": "npm run build:frontend",
-    "build:frontend": "cd apps/frontend && npm run build",
-    "start": "npm run start:backend",
-    "start:backend": "cd apps/backend && npm start",
-    "setup:db": "cd apps/backend && npm run db:setup && npm run db:seed"
+    "install": "npm install --workspaces",
+    "build": "npm run build --workspace=apps/frontend",
+    "start": "npm run start --workspace=apps/backend",
+    "dev": "concurrently \"npm run dev --workspace=apps/frontend\" \"npm run dev --workspace=apps/backend\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

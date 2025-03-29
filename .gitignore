@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+/dist
+/node_modules
+/bun.lockb
+
 
 # Editor directories and files
 .vscode/*

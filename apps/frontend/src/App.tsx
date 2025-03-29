@@ -12,12 +12,15 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
 import Booking from "@/pages/Booking";
+import Profile from "@/pages/Profile";
+import UserBookings from "@/pages/UserBookings";
 import Rooms from "@/pages/Rooms";
 import Amenities from "@/pages/Amenities";
 import NotFound from "@/pages/NotFound";
 import Gallery from "@/pages/Gallery";
 import Contact from "@/pages/Contact";
 import About from "@/pages/About";
+import UserManagement from "@/pages/admin/UserManagement";
 
 // Create a client for React Query
 const queryClient = new QueryClient({
@@ -43,7 +46,10 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/users" element={<UserManagement />} />
               <Route path="/booking" element={<Booking />} />
+              <Route path="/bookings" element={<UserBookings />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/rooms" element={<Rooms />} />
               <Route path="/amenities" element={<Amenities />} />
               <Route path="/gallery" element={<Gallery />} />
