@@ -1,3 +1,6 @@
+
+# Royal Palace Hotel Janakpur
+
 This monorepo contains both the frontend and backend code for the Royal Palace Hotel Janakpur website.
 
 ## Project Structure
@@ -6,7 +9,7 @@ This monorepo contains both the frontend and backend code for the Royal Palace H
 royalpalacehotel/
 │
 ├── apps/
-│   ├── backend/                 → NestJS, Prisma, Backend code
+│   ├── backend/                 → Node.js, Prisma, Backend code
 │   │   ├── src/
 │   │   ├── prisma/
 │   │   ├── .env.example
@@ -23,7 +26,6 @@ royalpalacehotel/
 ├── .gitignore
 ├── package.json                 → root workspace package.json
 ├── tsconfig.json                → root tsconfig for monorepo
-├── turbo.json                   → Turborepo configuration
 └── README.md
 ```
 
@@ -32,14 +34,14 @@ royalpalacehotel/
 ### Prerequisites
 
 - Node.js 18+
-- pnpm, npm, or yarn
+- npm or yarn
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/rishavdevtiwari/royalpalacehoteljanakpur.git
-   cd royalpalacehoteljanakpur
+   git clone https://github.com/rishavdevtiwari/royalpalacehotel.git
+   cd royalpalacehotel
    ```
 
 2. Install dependencies:
@@ -58,7 +60,13 @@ royalpalacehotel/
 
 ## Deployment
 
-The project is configured for deployment on Render.com. See render.yaml for details.
+### Frontend - GitHub Pages
+
+The frontend is deployed on GitHub Pages. See `GITHUB_PAGES_DEPLOYMENT.md` for details.
+
+### Backend - Render.com
+
+The backend is deployed on Render.com with a PostgreSQL database. See `apps/backend/render.yaml` for configuration details.
 
 ## License
 

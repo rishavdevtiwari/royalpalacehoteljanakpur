@@ -1,3 +1,4 @@
+
 services:
   - type: web
     name: royal-palace-hotel-api
@@ -17,7 +18,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        value: https://rishavdevtiwari.com.np
+        value: https://rishavdevtiwari.github.io/royalpalacehotel
       - key: HOTEL_EMAIL
         value: rishavdevtiwari01@gmail.com
       - key: EMAIL_PASSWORD
@@ -28,21 +29,6 @@ services:
         destination: /*
     domains:
       - api.rishavdevtiwari.com.np
-        
-  - type: web
-    name: royal-palace-hotel-frontend
-    env: static
-    buildCommand: cd apps/frontend && npm install && npm run build
-    staticPublishPath: apps/frontend/dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    domains:
-      - rishavdevtiwari.com.np
-    envVars:
-      - key: VITE_API_URL
-        value: https://api.rishavdevtiwari.com.np/api
         
 databases:
   - name: royal-palace-hotel-db
