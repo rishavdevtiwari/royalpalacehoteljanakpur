@@ -1,13 +1,13 @@
-
 import type { Config } from "tailwindcss";
 
-export default {
-	darkMode: ["class"],
+const config: Config = {
+	darkMode: "class",
 	content: [
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+		"./index.html"
 	],
 	prefix: "",
 	theme: {
@@ -26,12 +26,12 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				hotel: {
-					primary: '#334155',    // slate blue
-					secondary: '#F8F5F0',  // warm cream
-					accent: '#D4AF37',     // gold
-					dark: '#1E293B',       // rich charcoal
-					light: '#FFFFFF',      // clean white
-					muted: '#94A3B8'       // muted slate
+					primary: '#334155',
+					secondary: '#F8F5F0',
+					accent: '#D4AF37',
+					dark: '#1E293B',
+					light: '#FFFFFF',
+					muted: '#94A3B8'
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -79,50 +79,24 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				},
 				'fade-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateY(10px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
+					'0%': { opacity: '0', transform: 'translateY(10px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
 				},
 				'fade-out': {
-					'0%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					},
-					'100%': {
-						opacity: '0',
-						transform: 'translateY(10px)'
-					}
+					'0%': { opacity: '1', transform: 'translateY(0)' },
+					'100%': { opacity: '0', transform: 'translateY(10px)' }
 				},
 				'scale-in': {
-					'0%': {
-						transform: 'scale(0.95)',
-						opacity: '0'
-					},
-					'100%': {
-						transform: 'scale(1)',
-						opacity: '1'
-					}
+					'0%': { transform: 'scale(0.95)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
 				},
 				'scale-out': {
 					from: { transform: 'scale(1)', opacity: '1' },
@@ -171,4 +145,6 @@ export default {
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+};
+
+export default config;
