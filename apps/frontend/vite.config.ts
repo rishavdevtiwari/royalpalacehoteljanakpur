@@ -1,8 +1,12 @@
-
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { fileURLToPath, URL } from "node:url"; // Correct import for URL resolution
 
 export default defineConfig({
   plugins: [react()],
-  base: '/royalpalacehoteljanakpur/', 
-})
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)), // Fix aliasing
+    },
+  },
+});
