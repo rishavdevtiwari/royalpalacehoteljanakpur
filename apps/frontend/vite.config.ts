@@ -1,12 +1,22 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { fileURLToPath, URL } from "node:url"; // Correct import for URL resolution
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import path from 'path'
 
 export default defineConfig({
+  base: '/', 
   plugins: [react()],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)), // Fix aliasing
+      '@': path.resolve(__dirname, './src'),
     },
   },
-});
+  server: {
+    port: 8080
+  },
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    sourcemap: false
+  }
+})

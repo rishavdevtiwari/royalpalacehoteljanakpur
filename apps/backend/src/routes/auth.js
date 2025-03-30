@@ -67,7 +67,7 @@ router.post('/login', isAlreadyLoggedIn, async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Check for hardcoded admin
+    // Check for hardcoded admin - fixed email address to match login form
     if (email === 'admin@royalhotelpalace' && password === 'qwerty@123456') {
       // Generate JWT token for hardcoded admin
       const token = jwt.sign(

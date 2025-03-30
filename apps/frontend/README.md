@@ -1,6 +1,7 @@
 
-#  Royal Palace Hotel Management System - Frontend
+# A Royal Palace Hotel Management System - Frontend
 
+This directory contains the React frontend application for the hotel management system.
 
 ## Getting Started
 
@@ -23,7 +24,7 @@
 - Contact form
 - Admin dashboard for hotel management
 
-## Technologies Use
+## Technologies Used
 
 - React
 - React Router
