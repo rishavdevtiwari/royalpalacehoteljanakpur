@@ -1,8 +1,9 @@
-
 import { useQuery } from '@tanstack/react-query';
 
-// API URL
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// API URL - using direct URL instead of env variable to avoid errors
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://api.rishavdevtiwari.com.np/api' 
+  : 'http://localhost:3001/api';
 
 interface Room {
   id: string;

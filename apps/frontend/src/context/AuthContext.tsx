@@ -1,16 +1,20 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "sonner";
 
 // Define our user types
-export type UserRole = "USER" | "ADMIN";
+export type UserRole = "USER" | "ADMIN";  // Updated to match backend enum
 
 export interface User {
   id: string;
   email: string;
   name: string;
   role: UserRole;
+  phone?: string;
+  address?: string;
 }
+
+// API URL
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 interface AuthContextType {
   user: User | null;
@@ -24,30 +28,24 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// API URL - will use environment variable in production or default to localhost in development
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Check for existing session on mount
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  // Check authentication status
+  // Check authentication status with backend
   const checkAuthStatus = async (): Promise<boolean> => {
     try {
+      console.log('Checking auth status with backend');
       const response = await fetch(`${API_URL}/auth/status`, {
         method: 'GET',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include', // Important for cookies
       });
-
+      
       const data = await response.json();
+      console.log('Auth status response:', data);
       
       if (data.isLoggedIn && data.user) {
         setUser(data.user);
@@ -57,13 +55,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return false;
       }
     } catch (error) {
-      console.error('Auth check error:', error);
+      console.error('Error checking auth status:', error);
       setUser(null);
       return false;
     } finally {
       setLoading(false);
     }
   };
+
+  // Check for existing session on mount
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
 
   // Login function
   const login = async (email: string, password: string) => {
@@ -74,21 +77,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify({ email, password }),
+        credentials: 'include', // Important for cookies
       });
-
+      
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+        toast.error(errorData.message || "Login failed");
+        throw new Error(errorData.message || "Login failed");
       }
-
+      
       const data = await response.json();
       setUser(data.user);
       toast.success(`Welcome back, ${data.user.name}!`);
+      return data;
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(error instanceof Error ? error.message : 'Login failed');
       throw error;
     } finally {
       setLoading(false);
@@ -104,21 +108,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify({ email, password, name }),
+        credentials: 'include', // Important for cookies
       });
-
+      
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
+        toast.error(errorData.message || "Registration failed");
+        throw new Error(errorData.message || "Registration failed");
       }
-
+      
       const data = await response.json();
       setUser(data.user);
       toast.success("Registration successful! Welcome aboard.");
+      return data;
     } catch (error) {
       console.error("Registration error:", error);
-      toast.error(error instanceof Error ? error.message : 'Registration failed');
       throw error;
     } finally {
       setLoading(false);
@@ -130,14 +135,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
-        credentials: 'include',
+        credentials: 'include', // Important for cookies
       });
       
       setUser(null);
       toast.success("Logged out successfully.");
     } catch (error) {
       console.error("Logout error:", error);
-      // Still clear the user on the client side even if the logout request fails
+      // Still clear the user even if the API call fails
       setUser(null);
     }
   };
@@ -151,7 +156,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     register,
     logout,
     isAdmin,
-    checkAuthStatus
+    checkAuthStatus,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

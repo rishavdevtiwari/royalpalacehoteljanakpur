@@ -26,5 +26,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "apps/frontend/src/App.tsx", "apps/frontend/src/vite-env.d.ts", "apps/frontend/src/components/booking", "apps/frontend/src/components/Navbar.tsx", "apps/frontend/src/components/RoomCard.tsx", "apps/frontend/src/data", "apps/frontend/src/hooks", "apps/frontend/src/lib", "apps/frontend/src/admin", "apps/frontend/src/pages"]
 }

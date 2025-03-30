@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { toast } from 'sonner';
 
 interface AuthMiddlewareProps {
@@ -9,7 +8,7 @@ interface AuthMiddlewareProps {
 }
 
 const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ children }) => {
-  const { user, loading, isAdmin, checkAuthStatus } = useAuth();
+  const { user, loading, checkAuthStatus } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isChecking, setIsChecking] = useState(true);
