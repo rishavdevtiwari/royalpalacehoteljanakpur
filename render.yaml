@@ -25,24 +25,25 @@ services:
     domains:
       - api.rishavdevtiwari.com.np
 
-  # Frontend Service
-  - type: static
+  # Frontend Service (Changed "static" to "web")
+  - type: web
     name: royal-palace-hotel
     env: static
+    plan: free
     buildCommand: cd apps/frontend && npm install && npm run build
-    staticPublishPath: ./apps/frontend/dist
+    staticPublishPath: apps/frontend/dist
     headers:
       - path: /*
         name: Cache-Control
         value: no-cache
-    spa: true
     envVars:
       - key: NODE_ENV
         value: production
     domains:
       - rishavdevtiwari.com.np
       - www.rishavdevtiwari.com.np
-        
+    autoDeploy: true
+
 databases:
   - name: royalpalace-db
     plan: starter
