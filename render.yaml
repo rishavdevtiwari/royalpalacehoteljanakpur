@@ -30,20 +30,20 @@ databases:
     databaseName: royalpalace_db
 
   # Frontend Service (Static Site with Free Plan)
-  # - type: static  
-  #   name: royal-palace-hotel
-  #   env: static
-  #   buildCommand: cd apps/frontend && npm install && npm run build
-  #   staticPublishPath: apps/frontend/dist
-  #   headers:
-  #     - path: /*
-  #       name: Cache-Control
-  #       value: no-cache
-  #   envVars:
-  #     - key: NODE_ENV
-  #       value: production
-  #   domains:
-  #     - rishavdevtiwari.com.np
-  #     - www.rishavdevtiwari.com.np
-  #   autoDeploy: true  
+  - type: static  
+    name: royal-palace-hotel
+    env: static
+    buildCommand: cd apps/frontend && npm install && npm run build
+    staticPublishPath: apps/frontend/dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    envVars:
+      - key: NODE_ENV
+        value: production
+    domains:
+      - rishavdevtiwari.com.np
+      - www.rishavdevtiwari.com.np
+    autoDeploy: true  
 
