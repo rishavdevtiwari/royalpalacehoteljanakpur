@@ -30,7 +30,7 @@ databases:
     databaseName: royalpalace_db
 
   # Frontend Service (Static Site with Free Plan)
-  - type: static  
+  - type: web 
     name: royal-palace-hotel
     env: static
     buildCommand: cd apps/frontend && npm install && npm run build
